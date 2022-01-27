@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "zed-sdk",
+    "zed-sdk-sys",
+]
