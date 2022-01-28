@@ -1,4 +1,4 @@
-use anyhow::{anyhow, ensure, Result};
+use anyhow::{ensure, Result};
 use std::{env, path::PathBuf};
 
 const ZED_DIR_ENV: &str = "ZED_DIR";
@@ -18,7 +18,10 @@ fn main() -> Result<()> {
     };
 
     // code generation
+    #[cfg(feature = "generate-bindings")]
     {
+        use anyhow::anyhow;
+
         let include_dir = zed_dir.join("include");
         let bindings = bindgen::builder()
             .header(format!("{}/sl/c_api/types_c.h", include_dir.display()))
@@ -30,8 +33,7 @@ fn main() -> Result<()> {
             .generate()
             .map_err(|()| anyhow!("unable to run bindgen"))?;
 
-        let out_dir: PathBuf = env::var_os("OUT_DIR").unwrap().into();
-        bindings.write_to_file(out_dir.join("bindings.rs"))?;
+        bindings.write_to_file(concat!(env!("CARGO_MANIFEST_DIR"), "/src/bindings.rs"))?;
     }
 
     // linking
