@@ -506,11 +506,15 @@ fn bindgen_test_layout_SL_PoseData() {
         )
     );
 }
-pub const UNITY_PLAN_TYPE_UNITY_PLAN_TYPE_FLOOR: UNITY_PLAN_TYPE = 0;
-pub const UNITY_PLAN_TYPE_UNITY_PLAN_TYPE_HIT_HORIZONTAL: UNITY_PLAN_TYPE = 1;
-pub const UNITY_PLAN_TYPE_UNITY_PLAN_TYPE_HIT_VERTICAL: UNITY_PLAN_TYPE = 2;
-pub const UNITY_PLAN_TYPE_UNITY_PLAN_TYPE_HIT_UNKNOWN: UNITY_PLAN_TYPE = 3;
-pub type UNITY_PLAN_TYPE = ::std::os::raw::c_uint;
+#[repr(u32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum UNITY_PLAN_TYPE {
+    UNITY_PLAN_TYPE_FLOOR = 0,
+    UNITY_PLAN_TYPE_HIT_HORIZONTAL = 1,
+    UNITY_PLAN_TYPE_HIT_VERTICAL = 2,
+    UNITY_PLAN_TYPE_HIT_UNKNOWN = 3,
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct SL_PlaneData {
@@ -844,19 +848,23 @@ fn bindgen_test_layout_SL_BarometerData() {
         )
     );
 }
-#[doc = "< The heading is reliable and not affected by iron interferences."]
-pub const SL_HEADING_STATE_SL_HEADING_STATE_GOOD: SL_HEADING_STATE = 0;
-#[doc = "< The heading is reliable, but affected by slight iron interferences."]
-pub const SL_HEADING_STATE_SL_HEADING_STATE_OK: SL_HEADING_STATE = 1;
-#[doc = "< The heading is not reliable because affected by strong iron interferences."]
-pub const SL_HEADING_STATE_SL_HEADING_STATE_NOT_GOOD: SL_HEADING_STATE = 2;
-#[doc = "< The magnetometer has not been calibrated."]
-pub const SL_HEADING_STATE_SL_HEADING_STATE_NOT_CALIBRATED: SL_HEADING_STATE = 3;
-#[doc = "< The magnetomer sensor is not available."]
-pub const SL_HEADING_STATE_SL_HEADING_STATE_MAG_NOT_AVAILABLE: SL_HEADING_STATE = 4;
-pub const SL_HEADING_STATE_SL_HEADING_STATE_LAST: SL_HEADING_STATE = 5;
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = " \\brief Heading state enum"]
-pub type SL_HEADING_STATE = ::std::os::raw::c_uint;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_HEADING_STATE {
+    #[doc = "< The heading is reliable and not affected by iron interferences."]
+    SL_HEADING_STATE_GOOD = 0,
+    #[doc = "< The heading is reliable, but affected by slight iron interferences."]
+    SL_HEADING_STATE_OK = 1,
+    #[doc = "< The heading is not reliable because affected by strong iron interferences."]
+    SL_HEADING_STATE_NOT_GOOD = 2,
+    #[doc = "< The magnetometer has not been calibrated."]
+    SL_HEADING_STATE_NOT_CALIBRATED = 3,
+    #[doc = "< The magnetomer sensor is not available."]
+    SL_HEADING_STATE_MAG_NOT_AVAILABLE = 4,
+    SL_HEADING_STATE_LAST = 5,
+}
 #[doc = " \\brief Magnometer Data structure"]
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1137,10 +1145,14 @@ fn bindgen_test_layout_SL_SensorData() {
         )
     );
 }
-pub const USB_DEVICE_USB_DEVICE_OCULUS: USB_DEVICE = 0;
-pub const USB_DEVICE_USB_DEVICE_HTC: USB_DEVICE = 1;
-pub const USB_DEVICE_USB_DEVICE_STEREOLABS: USB_DEVICE = 2;
-pub type USB_DEVICE = ::std::os::raw::c_uint;
+#[repr(u32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum USB_DEVICE {
+    USB_DEVICE_OCULUS = 0,
+    USB_DEVICE_HTC = 1,
+    USB_DEVICE_STEREOLABS = 2,
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct USB_product {
@@ -1180,287 +1192,350 @@ fn bindgen_test_layout_USB_product() {
         )
     );
 }
-#[doc = "< Standard code for successful behavior."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_SUCCESS: SL_ERROR_CODE = 0;
-#[doc = "< Standard code for unsuccessful behavior."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_FAILURE: SL_ERROR_CODE = 1;
-#[doc = "< No GPU found or CUDA capability of the device is not supported."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_NO_GPU_COMPATIBLE: SL_ERROR_CODE = 2;
-#[doc = "< Not enough GPU memory for this depth mode, try a different mode (such as PERFORMANCE), or increase the minimum depth value (see InitParameters::depth_minimum_distance)."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_NOT_ENOUGH_GPU_MEMORY: SL_ERROR_CODE = 3;
-#[doc = "< The ZED camera is not plugged or detected."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_CAMERA_NOT_DETECTED: SL_ERROR_CODE = 4;
-#[doc = "< The MCU that controls the sensors module has an invalid Serial Number. You can try to recover it launching the 'ZED Diagnostic' tool from the command line with the option '-r'."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_SENSORS_NOT_INITIALIZED: SL_ERROR_CODE = 5;
-#[doc = "< a ZED-M or ZED2/2i camera is detected but the sensors (imu,barometer...) cannot be opened. Only for ZED-M or ZED2/2i devices. Unplug/replug is required"]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_SENSORS_NOT_AVAILABLE: SL_ERROR_CODE = 6;
-#[doc = "< In case of invalid resolution parameter, such as a upsize beyond the original image size in Camera::retrieveImage"]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_INVALID_RESOLUTION: SL_ERROR_CODE = 7;
-#[doc = "< This issue can occurs when you use multiple ZED or a USB 2.0 port (bandwidth issue)."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_LOW_USB_BANDWIDTH: SL_ERROR_CODE = 8;
-#[doc = "< ZED calibration file is not found on the host machine. Use ZED Explorer or ZED Calibration to get one."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_CALIBRATION_FILE_NOT_AVAILABLE: SL_ERROR_CODE = 9;
-#[doc = "< ZED calibration file is not valid, try to download the factory one or recalibrate your camera using 'ZED Calibration'."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_INVALID_CALIBRATION_FILE: SL_ERROR_CODE = 10;
-#[doc = "< The provided SVO file is not valid."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_INVALID_SVO_FILE: SL_ERROR_CODE = 11;
-#[doc = "< An recorder related error occurred (not enough free storage, invalid file)."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_SVO_RECORDING_ERROR: SL_ERROR_CODE = 12;
-#[doc = "< An SVO related error when NVIDIA based compression cannot be loaded."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_SVO_UNSUPPORTED_COMPRESSION: SL_ERROR_CODE = 13;
-#[doc = "<SVO end of file has been reached, and no frame will be available until the SVO position is reset."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_END_OF_SVOFILE_REACHED: SL_ERROR_CODE = 14;
-#[doc = "< The requested coordinate system is not available."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_INVALID_COORDINATE_SYSTEM: SL_ERROR_CODE = 15;
-#[doc = "< The firmware of the ZED is out of date. Update to the latest version."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_INVALID_FIRMWARE: SL_ERROR_CODE = 16;
-#[doc = "< An invalid parameter has been set for the function."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_INVALID_FUNCTION_PARAMETERS: SL_ERROR_CODE = 17;
-#[doc = "< In grab() or retrieveXXX() only, a CUDA error has been detected in the process. Activate verbose in SL_Camera::open for more info."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_CUDA_ERROR: SL_ERROR_CODE = 18;
-#[doc = "< In grab() only, ZED SDK is not initialized. Probably a missing call to SL_Camera::open."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_CAMERA_NOT_INITIALIZED: SL_ERROR_CODE = 19;
-#[doc = "< Your NVIDIA driver is too old and not compatible with your current CUDA version."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_NVIDIA_DRIVER_OUT_OF_DATE: SL_ERROR_CODE = 20;
-#[doc = "< The call of the function is not valid in the current context. Could be a missing call of SL_Camera::open."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_INVALID_FUNCTION_CALL: SL_ERROR_CODE = 21;
-#[doc = "< The SDK wasn't able to load its dependencies or somes assets are missing, the installer should be launched."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_CORRUPTED_SDK_INSTALLATION: SL_ERROR_CODE = 22;
-#[doc = "< The installed SDK is incompatible SDK used to compile the program."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_INCOMPATIBLE_SDK_VERSION: SL_ERROR_CODE = 23;
-#[doc = "< The given area file does not exist, check the path."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_INVALID_AREA_FILE: SL_ERROR_CODE = 24;
-#[doc = "< The area file does not contain enought data to be used or the SL_DEPTH_MODE used during the creation of the area file is different from the one currently set."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_INCOMPATIBLE_AREA_FILE: SL_ERROR_CODE = 25;
-#[doc = "< Failed to open the camera at the proper resolution. Try another resolution or make sure that the UVC driver is properly installed."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_CAMERA_FAILED_TO_SETUP: SL_ERROR_CODE = 26;
-#[doc = "< Your ZED can not be opened, try replugging it to another USB port or flipping the USB-C connector."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_CAMERA_DETECTION_ISSUE: SL_ERROR_CODE = 27;
-#[doc = "< Cannot start camera stream. Make sure your camera is not already used by another process or blocked by firewall or antivirus."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_CANNOT_START_CAMERA_STREAM: SL_ERROR_CODE = 28;
-#[doc = "< No GPU found, CUDA is unable to list it. Can be a driver/reboot issue."]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_NO_GPU_DETECTED: SL_ERROR_CODE = 29;
-#[doc = "< Plane not found, either no plane is detected in the scene, at the location or corresponding to the floor, or the floor plane doesn't match the prior given"]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_PLANE_NOT_FOUND: SL_ERROR_CODE = 30;
-#[doc = "< The Object detection module is only compatible with the ZED 2"]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_MODULE_NOT_COMPATIBLE_WITH_CAMERA: SL_ERROR_CODE = 31;
-#[doc = "< The module needs the sensors to be enabled (see InitParameters::disable_sensors)"]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_MOTION_SENSORS_REQUIRED: SL_ERROR_CODE = 32;
-#[doc = "< The module needs a newer version of CUDA"]
-pub const SL_ERROR_CODE_SL_ERROR_CODE_MODULE_NOT_COMPATIBLE_WITH_CUDA_VERSION: SL_ERROR_CODE = 33;
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists error codes in the ZED SDK."]
-pub type SL_ERROR_CODE = ::std::os::raw::c_uint;
-#[doc = "< 2208*1242, available framerates: 15 fps."]
-pub const SL_RESOLUTION_SL_RESOLUTION_HD2K: SL_RESOLUTION = 0;
-#[doc = "< 1920*1080, available framerates: 15, 30 fps."]
-pub const SL_RESOLUTION_SL_RESOLUTION_HD1080: SL_RESOLUTION = 1;
-#[doc = "< 1280*720, available framerates: 15, 30, 60 fps."]
-pub const SL_RESOLUTION_SL_RESOLUTION_HD720: SL_RESOLUTION = 2;
-#[doc = "< 672*376, available framerates: 15, 30, 60, 100 fps."]
-pub const SL_RESOLUTION_SL_RESOLUTION_VGA: SL_RESOLUTION = 3;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_ERROR_CODE {
+    #[doc = "< Standard code for successful behavior."]
+    SL_ERROR_CODE_SUCCESS = 0,
+    #[doc = "< Standard code for unsuccessful behavior."]
+    SL_ERROR_CODE_FAILURE = 1,
+    #[doc = "< No GPU found or CUDA capability of the device is not supported."]
+    SL_ERROR_CODE_NO_GPU_COMPATIBLE = 2,
+    #[doc = "< Not enough GPU memory for this depth mode, try a different mode (such as PERFORMANCE), or increase the minimum depth value (see InitParameters::depth_minimum_distance)."]
+    SL_ERROR_CODE_NOT_ENOUGH_GPU_MEMORY = 3,
+    #[doc = "< The ZED camera is not plugged or detected."]
+    SL_ERROR_CODE_CAMERA_NOT_DETECTED = 4,
+    #[doc = "< The MCU that controls the sensors module has an invalid Serial Number. You can try to recover it launching the 'ZED Diagnostic' tool from the command line with the option '-r'."]
+    SL_ERROR_CODE_SENSORS_NOT_INITIALIZED = 5,
+    #[doc = "< a ZED-M or ZED2/2i camera is detected but the sensors (imu,barometer...) cannot be opened. Only for ZED-M or ZED2/2i devices. Unplug/replug is required"]
+    SL_ERROR_CODE_SENSORS_NOT_AVAILABLE = 6,
+    #[doc = "< In case of invalid resolution parameter, such as a upsize beyond the original image size in Camera::retrieveImage"]
+    SL_ERROR_CODE_INVALID_RESOLUTION = 7,
+    #[doc = "< This issue can occurs when you use multiple ZED or a USB 2.0 port (bandwidth issue)."]
+    SL_ERROR_CODE_LOW_USB_BANDWIDTH = 8,
+    #[doc = "< ZED calibration file is not found on the host machine. Use ZED Explorer or ZED Calibration to get one."]
+    SL_ERROR_CODE_CALIBRATION_FILE_NOT_AVAILABLE = 9,
+    #[doc = "< ZED calibration file is not valid, try to download the factory one or recalibrate your camera using 'ZED Calibration'."]
+    SL_ERROR_CODE_INVALID_CALIBRATION_FILE = 10,
+    #[doc = "< The provided SVO file is not valid."]
+    SL_ERROR_CODE_INVALID_SVO_FILE = 11,
+    #[doc = "< An recorder related error occurred (not enough free storage, invalid file)."]
+    SL_ERROR_CODE_SVO_RECORDING_ERROR = 12,
+    #[doc = "< An SVO related error when NVIDIA based compression cannot be loaded."]
+    SL_ERROR_CODE_SVO_UNSUPPORTED_COMPRESSION = 13,
+    #[doc = "<SVO end of file has been reached, and no frame will be available until the SVO position is reset."]
+    SL_ERROR_CODE_END_OF_SVOFILE_REACHED = 14,
+    #[doc = "< The requested coordinate system is not available."]
+    SL_ERROR_CODE_INVALID_COORDINATE_SYSTEM = 15,
+    #[doc = "< The firmware of the ZED is out of date. Update to the latest version."]
+    SL_ERROR_CODE_INVALID_FIRMWARE = 16,
+    #[doc = "< An invalid parameter has been set for the function."]
+    SL_ERROR_CODE_INVALID_FUNCTION_PARAMETERS = 17,
+    #[doc = "< In grab() or retrieveXXX() only, a CUDA error has been detected in the process. Activate verbose in SL_Camera::open for more info."]
+    SL_ERROR_CODE_CUDA_ERROR = 18,
+    #[doc = "< In grab() only, ZED SDK is not initialized. Probably a missing call to SL_Camera::open."]
+    SL_ERROR_CODE_CAMERA_NOT_INITIALIZED = 19,
+    #[doc = "< Your NVIDIA driver is too old and not compatible with your current CUDA version."]
+    SL_ERROR_CODE_NVIDIA_DRIVER_OUT_OF_DATE = 20,
+    #[doc = "< The call of the function is not valid in the current context. Could be a missing call of SL_Camera::open."]
+    SL_ERROR_CODE_INVALID_FUNCTION_CALL = 21,
+    #[doc = "< The SDK wasn't able to load its dependencies or somes assets are missing, the installer should be launched."]
+    SL_ERROR_CODE_CORRUPTED_SDK_INSTALLATION = 22,
+    #[doc = "< The installed SDK is incompatible SDK used to compile the program."]
+    SL_ERROR_CODE_INCOMPATIBLE_SDK_VERSION = 23,
+    #[doc = "< The given area file does not exist, check the path."]
+    SL_ERROR_CODE_INVALID_AREA_FILE = 24,
+    #[doc = "< The area file does not contain enought data to be used or the SL_DEPTH_MODE used during the creation of the area file is different from the one currently set."]
+    SL_ERROR_CODE_INCOMPATIBLE_AREA_FILE = 25,
+    #[doc = "< Failed to open the camera at the proper resolution. Try another resolution or make sure that the UVC driver is properly installed."]
+    SL_ERROR_CODE_CAMERA_FAILED_TO_SETUP = 26,
+    #[doc = "< Your ZED can not be opened, try replugging it to another USB port or flipping the USB-C connector."]
+    SL_ERROR_CODE_CAMERA_DETECTION_ISSUE = 27,
+    #[doc = "< Cannot start camera stream. Make sure your camera is not already used by another process or blocked by firewall or antivirus."]
+    SL_ERROR_CODE_CANNOT_START_CAMERA_STREAM = 28,
+    #[doc = "< No GPU found, CUDA is unable to list it. Can be a driver/reboot issue."]
+    SL_ERROR_CODE_NO_GPU_DETECTED = 29,
+    #[doc = "< Plane not found, either no plane is detected in the scene, at the location or corresponding to the floor, or the floor plane doesn't match the prior given"]
+    SL_ERROR_CODE_PLANE_NOT_FOUND = 30,
+    #[doc = "< The Object detection module is only compatible with the ZED 2"]
+    SL_ERROR_CODE_MODULE_NOT_COMPATIBLE_WITH_CAMERA = 31,
+    #[doc = "< The module needs the sensors to be enabled (see InitParameters::disable_sensors)"]
+    SL_ERROR_CODE_MOTION_SENSORS_REQUIRED = 32,
+    #[doc = "< The module needs a newer version of CUDA"]
+    SL_ERROR_CODE_MODULE_NOT_COMPATIBLE_WITH_CUDA_VERSION = 33,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Represents the available resolution defined in the \\ref cameraResolution list."]
 #[doc = "\\note The VGA resolution does not respect the 640*480 standard to better fit the camera sensor (672*376 is used)."]
-pub type SL_RESOLUTION = ::std::os::raw::c_uint;
-#[doc = "< International System, 1/1000 METER."]
-pub const SL_UNIT_SL_UNIT_MILLIMETER: SL_UNIT = 0;
-#[doc = "< International System, 1/100 METER."]
-pub const SL_UNIT_SL_UNIT_CENTIMETER: SL_UNIT = 1;
-#[doc = "< International System, 1 METER"]
-pub const SL_UNIT_SL_UNIT_METER: SL_UNIT = 2;
-#[doc = "< Imperial Unit, 1/12 FOOT"]
-pub const SL_UNIT_SL_UNIT_INCH: SL_UNIT = 3;
-#[doc = "< Imperial Unit, 1 FOOT"]
-pub const SL_UNIT_SL_UNIT_FOOT: SL_UNIT = 4;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_RESOLUTION {
+    #[doc = "< 2208*1242, available framerates: 15 fps."]
+    SL_RESOLUTION_HD2K = 0,
+    #[doc = "< 1920*1080, available framerates: 15, 30 fps."]
+    SL_RESOLUTION_HD1080 = 1,
+    #[doc = "< 1280*720, available framerates: 15, 30, 60 fps."]
+    SL_RESOLUTION_HD720 = 2,
+    #[doc = "< 672*376, available framerates: 15, 30, 60, 100 fps."]
+    SL_RESOLUTION_VGA = 3,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists available unit for measures."]
-pub type SL_UNIT = ::std::os::raw::c_uint;
-#[doc = "< Standard coordinates system in computer vision. Used in OpenCV : see here : http://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html"]
-pub const SL_COORDINATE_SYSTEM_SL_COORDINATE_SYSTEM_IMAGE: SL_COORDINATE_SYSTEM = 0;
-#[doc = "< Left-Handed with Y up and Z forward. Used in Unity with DirectX."]
-pub const SL_COORDINATE_SYSTEM_SL_COORDINATE_SYSTEM_LEFT_HANDED_Y_UP: SL_COORDINATE_SYSTEM = 1;
-#[doc = "< Right-Handed with Y pointing up and Z backward. Used in OpenGL."]
-pub const SL_COORDINATE_SYSTEM_SL_COORDINATE_SYSTEM_RIGHT_HANDED_Y_UP: SL_COORDINATE_SYSTEM = 2;
-#[doc = "< Right-Handed with Z pointing up and Y forward. Used in 3DSMax."]
-pub const SL_COORDINATE_SYSTEM_SL_COORDINATE_SYSTEM_RIGHT_HANDED_Z_UP: SL_COORDINATE_SYSTEM = 3;
-#[doc = "< Left-Handed with Z axis pointing up and X forward. Used in Unreal Engine."]
-pub const SL_COORDINATE_SYSTEM_SL_COORDINATE_SYSTEM_LEFT_HANDED_Z_UP: SL_COORDINATE_SYSTEM = 4;
-#[doc = "< Right-Handed with Z pointing up and X forward. Used in ROS (REP 103)."]
-pub const SL_COORDINATE_SYSTEM_SL_COORDINATE_SYSTEM_RIGHT_HANDED_Z_UP_X_FWD: SL_COORDINATE_SYSTEM =
-    5;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_UNIT {
+    #[doc = "< International System, 1/1000 METER."]
+    SL_UNIT_MILLIMETER = 0,
+    #[doc = "< International System, 1/100 METER."]
+    SL_UNIT_CENTIMETER = 1,
+    #[doc = "< International System, 1 METER"]
+    SL_UNIT_METER = 2,
+    #[doc = "< Imperial Unit, 1/12 FOOT"]
+    SL_UNIT_INCH = 3,
+    #[doc = "< Imperial Unit, 1 FOOT"]
+    SL_UNIT_FOOT = 4,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists available coordinates systems for positional tracking and 3D measures."]
 #[doc = ""]
 #[doc = "\\image html CoordinateSystem.png"]
-pub type SL_COORDINATE_SYSTEM = ::std::os::raw::c_uint;
-#[doc = "< Defines if the camera can be opened by the SDK"]
-pub const SL_CAMERA_STATE_SL_CAMERA_STATE_AVAILABLE: SL_CAMERA_STATE = 0;
-#[doc = "<  Defines if the camera is already opened and unavailable"]
-pub const SL_CAMERA_STATE_SL_CAMERA_STATE_NOT_AVAILABLE: SL_CAMERA_STATE = 1;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_COORDINATE_SYSTEM {
+    #[doc = "< Standard coordinates system in computer vision. Used in OpenCV : see here : http://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html"]
+    SL_COORDINATE_SYSTEM_IMAGE = 0,
+    #[doc = "< Left-Handed with Y up and Z forward. Used in Unity with DirectX."]
+    SL_COORDINATE_SYSTEM_LEFT_HANDED_Y_UP = 1,
+    #[doc = "< Right-Handed with Y pointing up and Z backward. Used in OpenGL."]
+    SL_COORDINATE_SYSTEM_RIGHT_HANDED_Y_UP = 2,
+    #[doc = "< Right-Handed with Z pointing up and Y forward. Used in 3DSMax."]
+    SL_COORDINATE_SYSTEM_RIGHT_HANDED_Z_UP = 3,
+    #[doc = "< Left-Handed with Z axis pointing up and X forward. Used in Unreal Engine."]
+    SL_COORDINATE_SYSTEM_LEFT_HANDED_Z_UP = 4,
+    #[doc = "< Right-Handed with Z pointing up and X forward. Used in ROS (REP 103)."]
+    SL_COORDINATE_SYSTEM_RIGHT_HANDED_Z_UP_X_FWD = 5,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief List of possible camera state"]
-pub type SL_CAMERA_STATE = ::std::os::raw::c_uint;
-#[doc = "< Defines ZED Camera model"]
-pub const SL_MODEL_SL_MODEL_ZED: SL_MODEL = 0;
-#[doc = "<  Defines ZED Mini (ZED-M) Camera model"]
-pub const SL_MODEL_SL_MODEL_ZED_M: SL_MODEL = 1;
-#[doc = "< Defines ZED 2 Camera model"]
-pub const SL_MODEL_SL_MODEL_ZED2: SL_MODEL = 2;
-#[doc = "< Defines ZED 2i Camera model"]
-pub const SL_MODEL_SL_MODEL_ZED2i: SL_MODEL = 3;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_CAMERA_STATE {
+    #[doc = "< Defines if the camera can be opened by the SDK"]
+    SL_CAMERA_STATE_AVAILABLE = 0,
+    #[doc = "<  Defines if the camera is already opened and unavailable"]
+    SL_CAMERA_STATE_NOT_AVAILABLE = 1,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists compatible ZED Camera model"]
-pub type SL_MODEL = ::std::os::raw::c_uint;
-#[doc = "< CPU Memory (Processor side)."]
-pub const SL_MEM_SL_MEM_CPU: SL_MEM = 0;
-#[doc = "< GPU Memory (Graphic card side)."]
-pub const SL_MEM_SL_MEM_GPU: SL_MEM = 1;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_MODEL {
+    #[doc = "< Defines ZED Camera model"]
+    SL_MODEL_ZED = 0,
+    #[doc = "<  Defines ZED Mini (ZED-M) Camera model"]
+    SL_MODEL_ZED_M = 1,
+    #[doc = "< Defines ZED 2 Camera model"]
+    SL_MODEL_ZED2 = 2,
+    #[doc = "< Defines ZED 2i Camera model"]
+    SL_MODEL_ZED2i = 3,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief List available memory type"]
-pub type SL_MEM = ::std::os::raw::c_uint;
-#[doc = "< Three axis Accelerometer sensor to measure the inertial accelerations."]
-pub const SL_SENSOR_TYPE_SL_SENSOR_TYPE_ACCELEROMETER: SL_SENSOR_TYPE = 0;
-#[doc = "< Three axis Gyroscope sensor to measure the angular velocitiers."]
-pub const SL_SENSOR_TYPE_SL_SENSOR_TYPE_GYROSCOPE: SL_SENSOR_TYPE = 1;
-#[doc = "< Three axis Magnetometer sensor to measure the orientation of the device respect to the earth magnetic field."]
-pub const SL_SENSOR_TYPE_SL_SENSOR_TYPE_MAGNETOMETER: SL_SENSOR_TYPE = 2;
-#[doc = "< Barometer sensor to measure the atmospheric pressure."]
-pub const SL_SENSOR_TYPE_SL_SENSOR_TYPE_BAROMETER: SL_SENSOR_TYPE = 3;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_MEM {
+    #[doc = "< CPU Memory (Processor side)."]
+    SL_MEM_CPU = 0,
+    #[doc = "< GPU Memory (Graphic card side)."]
+    SL_MEM_GPU = 1,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief List of the available onboard sensors"]
-pub type SL_SENSOR_TYPE = ::std::os::raw::c_uint;
-#[doc = "< Acceleration [m/s²]."]
-pub const SL_SENSORS_UNIT_SL_SENSORS_UNIT_M_SEC_2: SL_SENSORS_UNIT = 0;
-#[doc = "< Angular velocity [deg/s]."]
-pub const SL_SENSORS_UNIT_SL_SENSORS_UNIT_DEG_SEC: SL_SENSORS_UNIT = 1;
-#[doc = "< MAgnetic Fiels [uT]."]
-pub const SL_SENSORS_UNIT_SL_SENSORS_UNIT_U_T: SL_SENSORS_UNIT = 2;
-#[doc = "< Atmospheric pressure [hPa]."]
-pub const SL_SENSORS_UNIT_SL_SENSORS_UNIT_HPA: SL_SENSORS_UNIT = 3;
-#[doc = "< Temperature [°C]."]
-pub const SL_SENSORS_UNIT_SL_SENSORS_UNIT_CELSIUS: SL_SENSORS_UNIT = 4;
-#[doc = "< Frequency [Hz]."]
-pub const SL_SENSORS_UNIT_SL_SENSORS_UNIT_HERTZ: SL_SENSORS_UNIT = 5;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_SENSOR_TYPE {
+    #[doc = "< Three axis Accelerometer sensor to measure the inertial accelerations."]
+    SL_SENSOR_TYPE_ACCELEROMETER = 0,
+    #[doc = "< Three axis Gyroscope sensor to measure the angular velocitiers."]
+    SL_SENSOR_TYPE_GYROSCOPE = 1,
+    #[doc = "< Three axis Magnetometer sensor to measure the orientation of the device respect to the earth magnetic field."]
+    SL_SENSOR_TYPE_MAGNETOMETER = 2,
+    #[doc = "< Barometer sensor to measure the atmospheric pressure."]
+    SL_SENSOR_TYPE_BAROMETER = 3,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief List of the available onboard sensors measurement units"]
-pub type SL_SENSORS_UNIT = ::std::os::raw::c_uint;
-#[doc = "< Left side only."]
-pub const SL_SIDE_SL_SIDE_LEFT: SL_SIDE = 0;
-#[doc = "< Right side only."]
-pub const SL_SIDE_SL_SIDE_RIGHT: SL_SIDE = 1;
-#[doc = "< Left and Right side."]
-pub const SL_SIDE_SL_SIDE_BOTH: SL_SIDE = 2;
-pub type SL_SIDE = ::std::os::raw::c_uint;
-pub const SL_INPUT_TYPE_SL_INPUT_TYPE_USB: SL_INPUT_TYPE = 0;
-pub const SL_INPUT_TYPE_SL_INPUT_TYPE_SVO: SL_INPUT_TYPE = 1;
-pub const SL_INPUT_TYPE_SL_INPUT_TYPE_STREAM: SL_INPUT_TYPE = 2;
-pub type SL_INPUT_TYPE = ::std::os::raw::c_uint;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_SENSORS_UNIT {
+    #[doc = "< Acceleration [m/s²]."]
+    SL_SENSORS_UNIT_M_SEC_2 = 0,
+    #[doc = "< Angular velocity [deg/s]."]
+    SL_SENSORS_UNIT_DEG_SEC = 1,
+    #[doc = "< MAgnetic Fiels [uT]."]
+    SL_SENSORS_UNIT_U_T = 2,
+    #[doc = "< Atmospheric pressure [hPa]."]
+    SL_SENSORS_UNIT_HPA = 3,
+    #[doc = "< Temperature [°C]."]
+    SL_SENSORS_UNIT_CELSIUS = 4,
+    #[doc = "< Frequency [Hz]."]
+    SL_SENSORS_UNIT_HERTZ = 5,
+}
+#[repr(u32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_SIDE {
+    #[doc = "< Left side only."]
+    SL_SIDE_LEFT = 0,
+    #[doc = "< Right side only."]
+    SL_SIDE_RIGHT = 1,
+    #[doc = "< Left and Right side."]
+    SL_SIDE_BOTH = 2,
+}
+#[repr(u32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_INPUT_TYPE {
+    SL_INPUT_TYPE_USB = 0,
+    SL_INPUT_TYPE_SVO = 1,
+    SL_INPUT_TYPE_STREAM = 2,
+}
 #[doc = "< The transform of SL_Pose will contains the motion with reference to the world frame (previously called PATH)."]
 pub const SL_REFERENCE_FRAME_SL_REFERENCE_FRAME_WORLD: SL_REFERENCE_FRAME = 0;
 #[doc = "< The transform of SL_Pose will contains the motion with reference to the previous camera frame (previously called POSE)."]
 pub const SL_REFERENCE_FRAME_SL_REFERENCE_FRAME_CAMERA: SL_REFERENCE_FRAME = 1;
 #[doc = "\\brief Defines which type of position matrix is used to store camera path and pose."]
 pub type SL_REFERENCE_FRAME = ::std::os::raw::c_uint;
-pub const SL_TIME_REFERENCE_SL_TIME_REFERENCE_IMAGE: SL_TIME_REFERENCE = 0;
-#[doc = " Defines the timestamp at the time the frame has been extracted from USB stream."]
-pub const SL_TIME_REFERENCE_SL_TIME_REFERENCE_CURRENT: SL_TIME_REFERENCE = 1;
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists specific and particular timestamps"]
-pub type SL_TIME_REFERENCE = ::std::os::raw::c_uint;
-#[doc = "< AVCHD/H264 encoding used in image streaming."]
-pub const SL_STREAMING_CODEC_SL_STREAMING_CODEC_H264: SL_STREAMING_CODEC = 0;
-#[doc = "<  HEVC/H265 encoding used in image streaming."]
-pub const SL_STREAMING_CODEC_SL_STREAMING_CODEC_H265: SL_STREAMING_CODEC = 1;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_TIME_REFERENCE {
+    SL_TIME_REFERENCE_IMAGE = 0,
+    #[doc = " Defines the timestamp at the time the frame has been extracted from USB stream."]
+    SL_TIME_REFERENCE_CURRENT = 1,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief List of codec"]
-pub type SL_STREAMING_CODEC = ::std::os::raw::c_uint;
-#[doc = "< Defines the brightness control. Affected value should be between 0 and 8."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_BRIGHTNESS: SL_VIDEO_SETTINGS = 0;
-#[doc = "< Defines the contrast control. Affected value should be between 0 and 8."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_CONTRAST: SL_VIDEO_SETTINGS = 1;
-#[doc = "< Defines the hue control. Affected value should be between 0 and 11."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_HUE: SL_VIDEO_SETTINGS = 2;
-#[doc = "< Defines the saturation control. Affected value should be between 0 and 8."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_SATURATION: SL_VIDEO_SETTINGS = 3;
-#[doc = "< Defines the digital sharpening control. Affected value should be between 0 and 8."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_SHARPNESS: SL_VIDEO_SETTINGS = 4;
-#[doc = "< Defines the ISP gamma control. Affected value should be between 1 and 9."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_GAMMA: SL_VIDEO_SETTINGS = 5;
-#[doc = "< Defines the gain control. Affected value should be between 0 and 100 for manual control."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_GAIN: SL_VIDEO_SETTINGS = 6;
-#[doc = "< Defines the exposure control. Affected value should be between 0 and 100 for manual control.\\n The exposition is mapped linearly in a percentage of the following max values. Special case for the setExposure(0) that corresponds to 0.17072ms.\\n The conversion to milliseconds depends on the framerate: <ul><li>15fps setExposure(100) -> 19.97ms</li><li>30fps setExposure(100) -> 19.97ms</li><li>60fps setExposure(100) -> 10.84072ms</li><li>100fps setExposure(100) -> 10.106624ms</li></ul>"]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_EXPOSURE: SL_VIDEO_SETTINGS = 7;
-#[doc = "< Defines if the Gain and Exposure are in automatic mode or not. Setting a Gain or Exposure through @GAIN or @EXPOSURE values will automatically set this value to 0."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_AEC_AGC: SL_VIDEO_SETTINGS = 8;
-#[doc = "< Defines the region of interest for automatic exposure/gain computation. To be used with overloaded @setCameraSettings/@getCameraSettings functions."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_AEC_AGC_ROI: SL_VIDEO_SETTINGS = 9;
-#[doc = "< Defines the color temperature value. Setting a value will automatically set @WHITEBALANCE_AUTO to 0. Affected value should be between 2800 and 6500 with a step of 100."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_WHITEBALANCE_TEMPERATURE: SL_VIDEO_SETTINGS = 10;
-#[doc = "< Defines if the White balance is in automatic mode or not"]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_WHITEBALANCE_AUTO: SL_VIDEO_SETTINGS = 11;
-#[doc = "< Defines the status of the camera front LED. Set to 0 to disable the light, 1 to enable the light. Default value is on. Requires Camera FW 1523 at least."]
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_LED_STATUS: SL_VIDEO_SETTINGS = 12;
-pub const SL_VIDEO_SETTINGS_SL_VIDEO_SETTINGS_LAST: SL_VIDEO_SETTINGS = 13;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_STREAMING_CODEC {
+    #[doc = "< AVCHD/H264 encoding used in image streaming."]
+    SL_STREAMING_CODEC_H264 = 0,
+    #[doc = "<  HEVC/H265 encoding used in image streaming."]
+    SL_STREAMING_CODEC_H265 = 1,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists available camera settings for the ZED camera (contrast, hue, saturation, gain...)."]
 #[doc = "\\warning GAIN and EXPOSURE are linked in auto/default mode (see \\ref SL_Camera::setCameraSettings)."]
-pub type SL_VIDEO_SETTINGS = ::std::os::raw::c_uint;
-pub const SL_MEASURE_SL_MEASURE_DISPARITY: SL_MEASURE = 0;
-#[doc = " Disparity map. Each pixel contains 1 float. SL_MAT_TYPE_F32_C1."]
-pub const SL_MEASURE_SL_MEASURE_DEPTH: SL_MEASURE = 1;
-#[doc = " Depth map. In SL_UNIT defined in SL_InitParameters. Each pixel contains 1 float. SL_MAT_TYPE_F32_C1."]
-pub const SL_MEASURE_SL_MEASURE_CONFIDENCE: SL_MEASURE = 2;
-#[doc = " Certainty/confidence of the depth map. Each pixel contains 1 float. SL_MAT_TYPE_F32_C1."]
-pub const SL_MEASURE_SL_MEASURE_XYZ: SL_MEASURE = 3;
-#[doc = " Point cloud. Each pixel contains 4 float (X, Y, Z, not used). SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_XYZRGBA: SL_MEASURE = 4;
-#[doc = " Colored point cloud. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the RGBA color.  SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_XYZBGRA: SL_MEASURE = 5;
-#[doc = " Colored point cloud. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the BGRA color.  SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_XYZARGB: SL_MEASURE = 6;
-#[doc = " Colored point cloud. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the ARGB color.  SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_XYZABGR: SL_MEASURE = 7;
-#[doc = " Colored point cloud. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the ABGR color.  SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_NORMALS: SL_MEASURE = 8;
-#[doc = "< Disparity map for right sensor. Each pixel contains 1 float. SL_MAT_TYPE_F32_C1."]
-pub const SL_MEASURE_SL_MEASURE_DISPARITY_RIGHT: SL_MEASURE = 9;
-pub const SL_MEASURE_SL_MEASURE_DEPTH_RIGHT: SL_MEASURE = 10;
-#[doc = " Depth map for right sensor. Each pixel contains 1 float. SL_MAT_TYPE_F32_C1."]
-pub const SL_MEASURE_SL_MEASURE_XYZ_RIGHT: SL_MEASURE = 11;
-#[doc = " Point cloud for right sensor. Each pixel contains 4 float (X, Y, Z, not used). SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_XYZRGBA_RIGHT: SL_MEASURE = 12;
-#[doc = " Colored point cloud for right sensor. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the RGBA color. SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_XYZBGRA_RIGHT: SL_MEASURE = 13;
-#[doc = " Colored point cloud for right sensor. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the BGRA color. SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_XYZARGB_RIGHT: SL_MEASURE = 14;
-#[doc = " Colored point cloud for right sensor. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the ARGB color. SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_XYZABGR_RIGHT: SL_MEASURE = 15;
-#[doc = " Colored point cloud for right sensor. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the ABGR color. SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_NORMALS_RIGHT: SL_MEASURE = 16;
-#[doc = " Normals vector for right view. Each pixel contains 4 float (X, Y, Z, 0).  SL_MAT_TYPE_F32_C4."]
-pub const SL_MEASURE_SL_MEASURE_DEPTH_U16_MM: SL_MEASURE = 17;
-#[doc = " Depth map in millimeter whatever the SL_UNIT defined in SL_InitParameters. Invalid values are set to 0, depth values are clamped at 65000.  Each pixel  contains 1 unsigned short. SL_MAT_TYPE_U16_C1."]
-pub const SL_MEASURE_SL_MEASURE_DEPTH_U16_MM_RIGHT: SL_MEASURE = 18;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_VIDEO_SETTINGS {
+    #[doc = "< Defines the brightness control. Affected value should be between 0 and 8."]
+    SL_VIDEO_SETTINGS_BRIGHTNESS = 0,
+    #[doc = "< Defines the contrast control. Affected value should be between 0 and 8."]
+    SL_VIDEO_SETTINGS_CONTRAST = 1,
+    #[doc = "< Defines the hue control. Affected value should be between 0 and 11."]
+    SL_VIDEO_SETTINGS_HUE = 2,
+    #[doc = "< Defines the saturation control. Affected value should be between 0 and 8."]
+    SL_VIDEO_SETTINGS_SATURATION = 3,
+    #[doc = "< Defines the digital sharpening control. Affected value should be between 0 and 8."]
+    SL_VIDEO_SETTINGS_SHARPNESS = 4,
+    #[doc = "< Defines the ISP gamma control. Affected value should be between 1 and 9."]
+    SL_VIDEO_SETTINGS_GAMMA = 5,
+    #[doc = "< Defines the gain control. Affected value should be between 0 and 100 for manual control."]
+    SL_VIDEO_SETTINGS_GAIN = 6,
+    #[doc = "< Defines the exposure control. Affected value should be between 0 and 100 for manual control.\\n The exposition is mapped linearly in a percentage of the following max values. Special case for the setExposure(0) that corresponds to 0.17072ms.\\n The conversion to milliseconds depends on the framerate: <ul><li>15fps setExposure(100) -> 19.97ms</li><li>30fps setExposure(100) -> 19.97ms</li><li>60fps setExposure(100) -> 10.84072ms</li><li>100fps setExposure(100) -> 10.106624ms</li></ul>"]
+    SL_VIDEO_SETTINGS_EXPOSURE = 7,
+    #[doc = "< Defines if the Gain and Exposure are in automatic mode or not. Setting a Gain or Exposure through @GAIN or @EXPOSURE values will automatically set this value to 0."]
+    SL_VIDEO_SETTINGS_AEC_AGC = 8,
+    #[doc = "< Defines the region of interest for automatic exposure/gain computation. To be used with overloaded @setCameraSettings/@getCameraSettings functions."]
+    SL_VIDEO_SETTINGS_AEC_AGC_ROI = 9,
+    #[doc = "< Defines the color temperature value. Setting a value will automatically set @WHITEBALANCE_AUTO to 0. Affected value should be between 2800 and 6500 with a step of 100."]
+    SL_VIDEO_SETTINGS_WHITEBALANCE_TEMPERATURE = 10,
+    #[doc = "< Defines if the White balance is in automatic mode or not"]
+    SL_VIDEO_SETTINGS_WHITEBALANCE_AUTO = 11,
+    #[doc = "< Defines the status of the camera front LED. Set to 0 to disable the light, 1 to enable the light. Default value is on. Requires Camera FW 1523 at least."]
+    SL_VIDEO_SETTINGS_LED_STATUS = 12,
+    SL_VIDEO_SETTINGS_LAST = 13,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists retrievable measures."]
-pub type SL_MEASURE = ::std::os::raw::c_uint;
-pub const SL_VIEW_SL_VIEW_LEFT: SL_VIEW = 0;
-#[doc = " Left BGRA image. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
-pub const SL_VIEW_SL_VIEW_RIGHT: SL_VIEW = 1;
-#[doc = " Right BGRA image. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
-pub const SL_VIEW_SL_VIEW_LEFT_GRAY: SL_VIEW = 2;
-#[doc = " Left GRAY image. Each pixel contains 1 usigned char. SL_MAT_TYPE_U8_C1."]
-pub const SL_VIEW_SL_VIEW_RIGHT_GRAY: SL_VIEW = 3;
-#[doc = " Right GRAY image. Each pixel contains 1 usigned char. SL_MAT_TYPE_U8_C1."]
-pub const SL_VIEW_SL_VIEW_LEFT_UNRECTIFIED: SL_VIEW = 4;
-#[doc = " Left BGRA unrectified image. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
-pub const SL_VIEW_SL_VIEW_RIGHT_UNRECTIFIED: SL_VIEW = 5;
-#[doc = " Right BGRA unrectified image. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
-pub const SL_VIEW_SL_VIEW_LEFT_UNRECTIFIED_GRAY: SL_VIEW = 6;
-#[doc = " Left GRAY unrectified image. Each pixel contains 1 usigned char. SL_MAT_TYPE_U8_C1."]
-pub const SL_VIEW_SL_VIEW_RIGHT_UNRECTIFIED_GRAY: SL_VIEW = 7;
-#[doc = " Right GRAY unrectified image. Each pixel contains 1 usigned char. SL_MAT_TYPE_U8_C1."]
-pub const SL_VIEW_SL_VIEW_SIDE_BY_SIDE: SL_VIEW = 8;
-#[doc = " Left and right image (the image width is therefore doubled). Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
-pub const SL_VIEW_SL_VIEW_DEPTH: SL_VIEW = 9;
-#[doc = " Color rendering of the depth. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4. Use \\ref MEASURE \"MEASURE_DEPTH\" with \\ref Camera.retrieveMeasure() to get depth values."]
-pub const SL_VIEW_SL_VIEW_CONFIDENCE: SL_VIEW = 10;
-#[doc = " Color rendering of the depth confidence. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
-pub const SL_VIEW_SL_VIEW_NORMALS: SL_VIEW = 11;
-#[doc = " Color rendering of the normals. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
-pub const SL_VIEW_SL_VIEW_DEPTH_RIGHT: SL_VIEW = 12;
-#[doc = " Color rendering of the right depth mapped on right sensor. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
-pub const SL_VIEW_SL_VIEW_NORMALS_RIGHT: SL_VIEW = 13;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_MEASURE {
+    SL_MEASURE_DISPARITY = 0,
+    #[doc = " Disparity map. Each pixel contains 1 float. SL_MAT_TYPE_F32_C1."]
+    SL_MEASURE_DEPTH = 1,
+    #[doc = " Depth map. In SL_UNIT defined in SL_InitParameters. Each pixel contains 1 float. SL_MAT_TYPE_F32_C1."]
+    SL_MEASURE_CONFIDENCE = 2,
+    #[doc = " Certainty/confidence of the depth map. Each pixel contains 1 float. SL_MAT_TYPE_F32_C1."]
+    SL_MEASURE_XYZ = 3,
+    #[doc = " Point cloud. Each pixel contains 4 float (X, Y, Z, not used). SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_XYZRGBA = 4,
+    #[doc = " Colored point cloud. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the RGBA color.  SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_XYZBGRA = 5,
+    #[doc = " Colored point cloud. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the BGRA color.  SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_XYZARGB = 6,
+    #[doc = " Colored point cloud. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the ARGB color.  SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_XYZABGR = 7,
+    #[doc = " Colored point cloud. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the ABGR color.  SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_NORMALS = 8,
+    #[doc = "< Disparity map for right sensor. Each pixel contains 1 float. SL_MAT_TYPE_F32_C1."]
+    SL_MEASURE_DISPARITY_RIGHT = 9,
+    SL_MEASURE_DEPTH_RIGHT = 10,
+    #[doc = " Depth map for right sensor. Each pixel contains 1 float. SL_MAT_TYPE_F32_C1."]
+    SL_MEASURE_XYZ_RIGHT = 11,
+    #[doc = " Point cloud for right sensor. Each pixel contains 4 float (X, Y, Z, not used). SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_XYZRGBA_RIGHT = 12,
+    #[doc = " Colored point cloud for right sensor. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the RGBA color. SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_XYZBGRA_RIGHT = 13,
+    #[doc = " Colored point cloud for right sensor. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the BGRA color. SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_XYZARGB_RIGHT = 14,
+    #[doc = " Colored point cloud for right sensor. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the ARGB color. SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_XYZABGR_RIGHT = 15,
+    #[doc = " Colored point cloud for right sensor. Each pixel contains 4 float (X, Y, Z, color). The color need to be read as an usigned char[4] representing the ABGR color. SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_NORMALS_RIGHT = 16,
+    #[doc = " Normals vector for right view. Each pixel contains 4 float (X, Y, Z, 0).  SL_MAT_TYPE_F32_C4."]
+    SL_MEASURE_DEPTH_U16_MM = 17,
+    #[doc = " Depth map in millimeter whatever the SL_UNIT defined in SL_InitParameters. Invalid values are set to 0, depth values are clamped at 65000.  Each pixel  contains 1 unsigned short. SL_MAT_TYPE_U16_C1."]
+    SL_MEASURE_DEPTH_U16_MM_RIGHT = 18,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists available views."]
-pub type SL_VIEW = ::std::os::raw::c_uint;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_VIEW {
+    SL_VIEW_LEFT = 0,
+    #[doc = " Left BGRA image. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
+    SL_VIEW_RIGHT = 1,
+    #[doc = " Right BGRA image. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
+    SL_VIEW_LEFT_GRAY = 2,
+    #[doc = " Left GRAY image. Each pixel contains 1 usigned char. SL_MAT_TYPE_U8_C1."]
+    SL_VIEW_RIGHT_GRAY = 3,
+    #[doc = " Right GRAY image. Each pixel contains 1 usigned char. SL_MAT_TYPE_U8_C1."]
+    SL_VIEW_LEFT_UNRECTIFIED = 4,
+    #[doc = " Left BGRA unrectified image. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
+    SL_VIEW_RIGHT_UNRECTIFIED = 5,
+    #[doc = " Right BGRA unrectified image. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
+    SL_VIEW_LEFT_UNRECTIFIED_GRAY = 6,
+    #[doc = " Left GRAY unrectified image. Each pixel contains 1 usigned char. SL_MAT_TYPE_U8_C1."]
+    SL_VIEW_RIGHT_UNRECTIFIED_GRAY = 7,
+    #[doc = " Right GRAY unrectified image. Each pixel contains 1 usigned char. SL_MAT_TYPE_U8_C1."]
+    SL_VIEW_SIDE_BY_SIDE = 8,
+    #[doc = " Left and right image (the image width is therefore doubled). Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
+    SL_VIEW_DEPTH = 9,
+    #[doc = " Color rendering of the depth. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4. Use \\ref MEASURE \"MEASURE_DEPTH\" with \\ref Camera.retrieveMeasure() to get depth values."]
+    SL_VIEW_CONFIDENCE = 10,
+    #[doc = " Color rendering of the depth confidence. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
+    SL_VIEW_NORMALS = 11,
+    #[doc = " Color rendering of the normals. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
+    SL_VIEW_DEPTH_RIGHT = 12,
+    #[doc = " Color rendering of the right depth mapped on right sensor. Each pixel contains 4 usigned char (B,G,R,A). SL_MAT_TYPE_U8_C4."]
+    SL_VIEW_NORMALS_RIGHT = 13,
+}
 #[doc = "< The tracking is not yet initialized, the object ID is not usable"]
 pub const SL_OBJECT_TRACKING_STATE_SL_OBJECT_TRACKING_STATE_OFF: SL_OBJECT_TRACKING_STATE = 0;
 #[doc = "< The object is tracked"]
@@ -1471,95 +1546,122 @@ pub const SL_OBJECT_TRACKING_STATE_SL_OBJECT_TRACKING_STATE_SEARCHING: SL_OBJECT
 pub const SL_OBJECT_TRACKING_STATE_SL_OBJECT_TRACKING_STATE_TERMINATE: SL_OBJECT_TRACKING_STATE = 3;
 #[doc = "\\brief Lists available object tracking state"]
 pub type SL_OBJECT_TRACKING_STATE = ::std::os::raw::c_uint;
-pub const SL_POSITIONAL_TRACKING_STATE_SL_POSITIONAL_TRACKING_STATE_SEARCHING:
-    SL_POSITIONAL_TRACKING_STATE = 0;
-#[doc = " The camera is searching for a previously known position to locate itself."]
-pub const SL_POSITIONAL_TRACKING_STATE_SL_POSITIONAL_TRACKING_STATE_OK:
-    SL_POSITIONAL_TRACKING_STATE = 1;
-#[doc = " Positional tracking is working normally."]
-pub const SL_POSITIONAL_TRACKING_STATE_SL_POSITIONAL_TRACKING_STATE_OFF:
-    SL_POSITIONAL_TRACKING_STATE = 2;
-#[doc = " Positional tracking is not enabled."]
-pub const SL_POSITIONAL_TRACKING_STATE_SL_POSITIONAL_TRACKING_STATE_FPS_TOO_LOW:
-    SL_POSITIONAL_TRACKING_STATE = 3;
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists the different states of positional tracking."]
-pub type SL_POSITIONAL_TRACKING_STATE = ::std::os::raw::c_uint;
-#[doc = "< The spatial memory file has been successfully created."]
-pub const SL_AREA_EXPORTING_STATE_SL_AREA_EXPORTING_STATE_SUCCESS: SL_AREA_EXPORTING_STATE = 0;
-#[doc = "< The spatial memory is currently written."]
-pub const SL_AREA_EXPORTING_STATE_SL_AREA_EXPORTING_STATE_RUNNING: SL_AREA_EXPORTING_STATE = 1;
-#[doc = "< The spatial memory file exportation has not been called."]
-pub const SL_AREA_EXPORTING_STATE_SL_AREA_EXPORTING_STATE_NOT_STARTED: SL_AREA_EXPORTING_STATE = 2;
-#[doc = "< The spatial memory contains no data, the file is empty."]
-pub const SL_AREA_EXPORTING_STATE_SL_AREA_EXPORTING_STATE_FILE_EMPTY: SL_AREA_EXPORTING_STATE = 3;
-#[doc = "< The spatial memory file has not been written because of a wrong file name."]
-pub const SL_AREA_EXPORTING_STATE_SL_AREA_EXPORTING_STATE_FILE_ERROR: SL_AREA_EXPORTING_STATE = 4;
-#[doc = "< The spatial memory learning is disable, no file can be created."]
-pub const SL_AREA_EXPORTING_STATE_SL_AREA_EXPORTING_STATE_SPATIAL_MEMORY_DISABLED:
-    SL_AREA_EXPORTING_STATE = 5;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_POSITIONAL_TRACKING_STATE {
+    SL_POSITIONAL_TRACKING_STATE_SEARCHING = 0,
+    #[doc = " The camera is searching for a previously known position to locate itself."]
+    SL_POSITIONAL_TRACKING_STATE_OK = 1,
+    #[doc = " Positional tracking is working normally."]
+    SL_POSITIONAL_TRACKING_STATE_OFF = 2,
+    #[doc = " Positional tracking is not enabled."]
+    SL_POSITIONAL_TRACKING_STATE_FPS_TOO_LOW = 3,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists the different states of spatial memory area export."]
-pub type SL_AREA_EXPORTING_STATE = ::std::os::raw::c_uint;
-pub const SL_SPATIAL_MAPPING_STATE_SL_SPATIAL_MAPPING_STATE_INITIALIZING: SL_SPATIAL_MAPPING_STATE =
-    0;
-#[doc = " The spatial mapping is initializing."]
-pub const SL_SPATIAL_MAPPING_STATE_SL_SPATIAL_MAPPING_STATE_OK: SL_SPATIAL_MAPPING_STATE = 1;
-#[doc = " The depth and tracking data were correctly integrated in the fusion algorithm."]
-pub const SL_SPATIAL_MAPPING_STATE_SL_SPATIAL_MAPPING_STATE_NOT_ENOUGH_MEMORY:
-    SL_SPATIAL_MAPPING_STATE = 2;
-#[doc = " The maximum memory dedicated to the scanning has been reach, the mesh will no longer be updated."]
-pub const SL_SPATIAL_MAPPING_STATE_SL_SPATIAL_MAPPING_STATE_NOT_ENABLED: SL_SPATIAL_MAPPING_STATE =
-    3;
-#[doc = " Camera::enableSpatialMapping() wasn't called (or the scanning was stopped and not relaunched)."]
-pub const SL_SPATIAL_MAPPING_STATE_SL_SPATIAL_MAPPING_STATE_FPS_TOO_LOW: SL_SPATIAL_MAPPING_STATE =
-    4;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_AREA_EXPORTING_STATE {
+    #[doc = "< The spatial memory file has been successfully created."]
+    SL_AREA_EXPORTING_STATE_SUCCESS = 0,
+    #[doc = "< The spatial memory is currently written."]
+    SL_AREA_EXPORTING_STATE_RUNNING = 1,
+    #[doc = "< The spatial memory file exportation has not been called."]
+    SL_AREA_EXPORTING_STATE_NOT_STARTED = 2,
+    #[doc = "< The spatial memory contains no data, the file is empty."]
+    SL_AREA_EXPORTING_STATE_FILE_EMPTY = 3,
+    #[doc = "< The spatial memory file has not been written because of a wrong file name."]
+    SL_AREA_EXPORTING_STATE_FILE_ERROR = 4,
+    #[doc = "< The spatial memory learning is disable, no file can be created."]
+    SL_AREA_EXPORTING_STATE_SPATIAL_MEMORY_DISABLED = 5,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Gives the spatial mapping state."]
-pub type SL_SPATIAL_MAPPING_STATE = ::std::os::raw::c_uint;
-#[doc = "< Represents a surface with faces, 3D points are linked by edges, no color information."]
-pub const SL_SPATIAL_MAP_TYPE_SL_SPATIAL_MAP_TYPE_MESH: SL_SPATIAL_MAP_TYPE = 0;
-#[doc = "< Geometry is represented by a set of 3D colored points."]
-pub const SL_SPATIAL_MAP_TYPE_SL_SPATIAL_MAP_TYPE_FUSED_POINT_CLOUD: SL_SPATIAL_MAP_TYPE = 1;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_SPATIAL_MAPPING_STATE {
+    SL_SPATIAL_MAPPING_STATE_INITIALIZING = 0,
+    #[doc = " The spatial mapping is initializing."]
+    SL_SPATIAL_MAPPING_STATE_OK = 1,
+    #[doc = " The depth and tracking data were correctly integrated in the fusion algorithm."]
+    SL_SPATIAL_MAPPING_STATE_NOT_ENOUGH_MEMORY = 2,
+    #[doc = " The maximum memory dedicated to the scanning has been reach, the mesh will no longer be updated."]
+    SL_SPATIAL_MAPPING_STATE_NOT_ENABLED = 3,
+    #[doc = " Camera::enableSpatialMapping() wasn't called (or the scanning was stopped and not relaunched)."]
+    SL_SPATIAL_MAPPING_STATE_FPS_TOO_LOW = 4,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists the types of spatial maps that can be created."]
-pub type SL_SPATIAL_MAP_TYPE = ::std::os::raw::c_uint;
-#[doc = "< Clean the mesh by closing small holes and removing isolated faces."]
-pub const SL_MESH_FILTER_SL_MESH_FILTER_LOW: SL_MESH_FILTER = 0;
-#[doc = "< Soft decimation and smoothing."]
-pub const SL_MESH_FILTER_SL_MESH_FILTER_MEDIUM: SL_MESH_FILTER = 1;
-#[doc = "< Decimate the number of triangles and apply a soft smooth."]
-pub const SL_MESH_FILTER_SL_MESH_FILTER_HIGH: SL_MESH_FILTER = 2;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_SPATIAL_MAP_TYPE {
+    #[doc = "< Represents a surface with faces, 3D points are linked by edges, no color information."]
+    SL_SPATIAL_MAP_TYPE_MESH = 0,
+    #[doc = "< Geometry is represented by a set of 3D colored points."]
+    SL_SPATIAL_MAP_TYPE_FUSED_POINT_CLOUD = 1,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists available mesh filtering intensity."]
-pub type SL_MESH_FILTER = ::std::os::raw::c_uint;
-#[doc = "< Contains only vertices and faces."]
-pub const SL_MESH_FILE_FORMAT_SL_MESH_FILE_FORMAT_PLY: SL_MESH_FILE_FORMAT = 0;
-#[doc = "< Contains only vertices and faces, encoded in binary."]
-pub const SL_MESH_FILE_FORMAT_SL_MESH_FILE_FORMAT_PLY_BIN: SL_MESH_FILE_FORMAT = 1;
-#[doc = "< Contains vertices, normals, faces and textures informations if possible."]
-pub const SL_MESH_FILE_FORMAT_SL_MESH_FILE_FORMAT_OBJ: SL_MESH_FILE_FORMAT = 2;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_MESH_FILTER {
+    #[doc = "< Clean the mesh by closing small holes and removing isolated faces."]
+    SL_MESH_FILTER_LOW = 0,
+    #[doc = "< Soft decimation and smoothing."]
+    SL_MESH_FILTER_MEDIUM = 1,
+    #[doc = "< Decimate the number of triangles and apply a soft smooth."]
+    SL_MESH_FILTER_HIGH = 2,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists available mesh file formats."]
-pub type SL_MESH_FILE_FORMAT = ::std::os::raw::c_uint;
-#[doc = " This mode outputs ZED standard depth map that preserves edges and depth accuracy."]
-#[doc = " Applications example: Obstacle detection, Automated navigation, People detection, 3D reconstruction, measurements."]
-pub const SL_SENSING_MODE_SL_SENSING_MODE_STANDARD: SL_SENSING_MODE = 0;
-#[doc = " This mode outputs a smooth and fully dense depth map."]
-#[doc = " Applications example: AR/VR, Mixed-reality capture, Image post-processing."]
-pub const SL_SENSING_MODE_SL_SENSING_MODE_FILL: SL_SENSING_MODE = 1;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_MESH_FILE_FORMAT {
+    #[doc = "< Contains only vertices and faces."]
+    SL_MESH_FILE_FORMAT_PLY = 0,
+    #[doc = "< Contains only vertices and faces, encoded in binary."]
+    SL_MESH_FILE_FORMAT_PLY_BIN = 1,
+    #[doc = "< Contains vertices, normals, faces and textures informations if possible."]
+    SL_MESH_FILE_FORMAT_OBJ = 2,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists available depth sensing modes."]
-pub type SL_SENSING_MODE = ::std::os::raw::c_uint;
-pub const SL_DEPTH_MODE_SL_DEPTH_MODE_NONE: SL_DEPTH_MODE = 0;
-#[doc = " This mode does not compute any depth map. Only rectified stereo images will be available."]
-pub const SL_DEPTH_MODE_SL_DEPTH_MODE_PERFORMANCE: SL_DEPTH_MODE = 1;
-#[doc = " Computation mode optimized for speed."]
-pub const SL_DEPTH_MODE_SL_DEPTH_MODE_QUALITY: SL_DEPTH_MODE = 2;
-#[doc = " Computation mode designed for challenging areas with untextured surfaces."]
-pub const SL_DEPTH_MODE_SL_DEPTH_MODE_ULTRA: SL_DEPTH_MODE = 3;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_SENSING_MODE {
+    #[doc = " This mode outputs ZED standard depth map that preserves edges and depth accuracy."]
+    #[doc = " Applications example: Obstacle detection, Automated navigation, People detection, 3D reconstruction, measurements."]
+    SL_SENSING_MODE_STANDARD = 0,
+    #[doc = " This mode outputs a smooth and fully dense depth map."]
+    #[doc = " Applications example: AR/VR, Mixed-reality capture, Image post-processing."]
+    SL_SENSING_MODE_FILL = 1,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists available depth computation modes."]
-pub type SL_DEPTH_MODE = ::std::os::raw::c_uint;
-pub const SL_FLIP_MODE_SL_FLIP_MODE_OFF: SL_FLIP_MODE = 0;
-#[doc = "  default behavior."]
-pub const SL_FLIP_MODE_SL_FLIP_MODE_ON: SL_FLIP_MODE = 1;
-#[doc = " Images and camera sensors data are flipped useful when your camera is mounted upside down."]
-pub const SL_FLIP_MODE_SL_FLIP_MODE_AUTO: SL_FLIP_MODE = 2;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_DEPTH_MODE {
+    SL_DEPTH_MODE_NONE = 0,
+    #[doc = " This mode does not compute any depth map. Only rectified stereo images will be available."]
+    SL_DEPTH_MODE_PERFORMANCE = 1,
+    #[doc = " Computation mode optimized for speed."]
+    SL_DEPTH_MODE_QUALITY = 2,
+    #[doc = " Computation mode designed for challenging areas with untextured surfaces."]
+    SL_DEPTH_MODE_ULTRA = 3,
+}
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Gives the camera flip mode"]
-pub type SL_FLIP_MODE = ::std::os::raw::c_uint;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_FLIP_MODE {
+    SL_FLIP_MODE_OFF = 0,
+    #[doc = "  default behavior."]
+    SL_FLIP_MODE_ON = 1,
+    #[doc = " Images and camera sensors data are flipped useful when your camera is mounted upside down."]
+    SL_FLIP_MODE_AUTO = 2,
+}
 #[doc = "< copy data from CPU to CPU."]
 pub const SL_COPY_TYPE_SL_COPY_TYPE_CPU_CPU: SL_COPY_TYPE = 0;
 #[doc = "< copy data from CPU to GPU."]
@@ -1570,15 +1672,19 @@ pub const SL_COPY_TYPE_SL_COPY_TYPE_GPU_GPU: SL_COPY_TYPE = 2;
 pub const SL_COPY_TYPE_SL_COPY_TYPE_GPU_CPU: SL_COPY_TYPE = 3;
 #[doc = "\\brief List available copy operation on Mat"]
 pub type SL_COPY_TYPE = ::std::os::raw::c_uint;
-#[doc = "< PNG/ZSTD (lossless) CPU based compression : avg size = 42% (of RAW)."]
-pub const SL_SVO_COMPRESSION_MODE_SL_SVO_COMPRESSION_MODE_LOSSLESS: SL_SVO_COMPRESSION_MODE = 0;
-#[doc = "< H264(AVCHD) GPU based compression : avg size = 1% (of RAW). Requires a NVIDIA GPU"]
-pub const SL_SVO_COMPRESSION_MODE_SL_SVO_COMPRESSION_MODE_H264: SL_SVO_COMPRESSION_MODE = 1;
-#[doc = "< H265(HEVC) GPU based compression: avg size = 1% (of RAW). Requires a NVIDIA GPU, Pascal architecture or newer"]
-pub const SL_SVO_COMPRESSION_MODE_SL_SVO_COMPRESSION_MODE_H265: SL_SVO_COMPRESSION_MODE = 2;
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief Lists available compression modes for SVO recording."]
 #[doc = "\\brief SL_SVO_COMPRESSION_MODE_LOSSLESS is an improvement of previous lossless compression (used in ZED Explorer), even if size may be bigger, compression time is much faster."]
-pub type SL_SVO_COMPRESSION_MODE = ::std::os::raw::c_uint;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_SVO_COMPRESSION_MODE {
+    #[doc = "< PNG/ZSTD (lossless) CPU based compression : avg size = 42% (of RAW)."]
+    SL_SVO_COMPRESSION_MODE_LOSSLESS = 0,
+    #[doc = "< H264(AVCHD) GPU based compression : avg size = 1% (of RAW). Requires a NVIDIA GPU"]
+    SL_SVO_COMPRESSION_MODE_H264 = 1,
+    #[doc = "< H265(HEVC) GPU based compression: avg size = 1% (of RAW). Requires a NVIDIA GPU, Pascal architecture or newer"]
+    SL_SVO_COMPRESSION_MODE_H265 = 2,
+}
 #[doc = "< float 1 channel."]
 pub const SL_MAT_TYPE_SL_MAT_TYPE_F32_C1: SL_MAT_TYPE = 0;
 #[doc = "< float 2 channels."]
@@ -1655,24 +1761,28 @@ pub const SL_OBJECT_ACTION_STATE_SL_OBJECT_ACTION_STATE_IDLE: SL_OBJECT_ACTION_S
 pub const SL_OBJECT_ACTION_STATE_SL_OBJECT_ACTION_STATE_MOVING: SL_OBJECT_ACTION_STATE = 1;
 #[doc = "\\brief Lists available object action state"]
 pub type SL_OBJECT_ACTION_STATE = ::std::os::raw::c_uint;
-#[doc = "< Any objects, bounding box based"]
-pub const SL_DETECTION_MODEL_SL_DETECTION_MODEL_MULTI_CLASS_BOX: SL_DETECTION_MODEL = 0;
-#[doc = "< Any objects, bounding box based, more accurate but slower than the base model"]
-pub const SL_DETECTION_MODEL_SL_DETECTION_MODEL_MULTI_CLASS_BOX_ACCURATE: SL_DETECTION_MODEL = 1;
-#[doc = "<  Keypoints based, specific to human skeleton, real time performance even on Jetson or low end GPU cards"]
-pub const SL_DETECTION_MODEL_SL_DETECTION_MODEL_HUMAN_BODY_FAST: SL_DETECTION_MODEL = 2;
-#[doc = "<  Keypoints based, specific to human skeleton, state of the art accuracy, requires powerful GPU"]
-pub const SL_DETECTION_MODEL_SL_DETECTION_MODEL_HUMAN_BODY_ACCURATE: SL_DETECTION_MODEL = 3;
-#[doc = "< Any objects, bounding box based, compromise between accuracy and speed"]
-pub const SL_DETECTION_MODEL_SL_DETECTION_MODEL_MULTI_CLASS_BOX_MEDIUM: SL_DETECTION_MODEL = 4;
-#[doc = "<  Keypoints based, specific to human skeleton, compromise between accuracy and speed"]
-pub const SL_DETECTION_MODEL_SL_DETECTION_MODEL_HUMAN_BODY_MEDIUM: SL_DETECTION_MODEL = 5;
-#[doc = "<  Bounding Box detector specialized in person heads, particulary well suited for crowded environement, the person localization is also improved"]
-pub const SL_DETECTION_MODEL_SL_DETECTION_MODEL_PERSON_HEAD_BOX: SL_DETECTION_MODEL = 6;
-#[doc = "< For external inference, using your own custom model and/or frameworks. This mode disable the internal inference engine, the 2D bounding box detection must be provided"]
-pub const SL_DETECTION_MODEL_SL_DETECTION_MODEL_CUSTOM_BOX_OBJECTS: SL_DETECTION_MODEL = 7;
+#[repr(u32)]
+#[non_exhaustive]
 #[doc = "\\brief List available models for detection"]
-pub type SL_DETECTION_MODEL = ::std::os::raw::c_uint;
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SL_DETECTION_MODEL {
+    #[doc = "< Any objects, bounding box based"]
+    SL_DETECTION_MODEL_MULTI_CLASS_BOX = 0,
+    #[doc = "< Any objects, bounding box based, more accurate but slower than the base model"]
+    SL_DETECTION_MODEL_MULTI_CLASS_BOX_ACCURATE = 1,
+    #[doc = "<  Keypoints based, specific to human skeleton, real time performance even on Jetson or low end GPU cards"]
+    SL_DETECTION_MODEL_HUMAN_BODY_FAST = 2,
+    #[doc = "<  Keypoints based, specific to human skeleton, state of the art accuracy, requires powerful GPU"]
+    SL_DETECTION_MODEL_HUMAN_BODY_ACCURATE = 3,
+    #[doc = "< Any objects, bounding box based, compromise between accuracy and speed"]
+    SL_DETECTION_MODEL_MULTI_CLASS_BOX_MEDIUM = 4,
+    #[doc = "<  Keypoints based, specific to human skeleton, compromise between accuracy and speed"]
+    SL_DETECTION_MODEL_HUMAN_BODY_MEDIUM = 5,
+    #[doc = "<  Bounding Box detector specialized in person heads, particulary well suited for crowded environement, the person localization is also improved"]
+    SL_DETECTION_MODEL_PERSON_HEAD_BOX = 6,
+    #[doc = "< For external inference, using your own custom model and/or frameworks. This mode disable the internal inference engine, the 2D bounding box detection must be provided"]
+    SL_DETECTION_MODEL_CUSTOM_BOX_OBJECTS = 7,
+}
 #[doc = " \\brief 18  keypoint model of COCO 18."]
 #[doc = " \\note local keypoint angle and position are not available with this format"]
 pub const SL_BODY_FORMAT_SL_BODY_FORMAT_POSE_18: SL_BODY_FORMAT = 0;

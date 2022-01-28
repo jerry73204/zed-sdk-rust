@@ -3,4 +3,5 @@
 #![allow(non_snake_case)]
 
 mod bindings;
+mod ext;
 pub use bindings::*;

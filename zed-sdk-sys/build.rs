@@ -21,15 +21,24 @@ fn main() -> Result<()> {
     #[cfg(feature = "generate-bindings")]
     {
         use anyhow::anyhow;
+        use std::fs;
 
         let include_dir = zed_dir.join("include");
-        let bindings = bindgen::builder()
+        let mut builder = bindgen::builder()
             .header(format!("{}/sl/c_api/types_c.h", include_dir.display()))
             .header(format!(
                 "{}/sl/c_api/zed_interface.h",
                 include_dir.display()
             ))
-            .clang_arg(format!("-I{}", include_dir.display()))
+            .clang_arg(format!("-I{}", include_dir.display()));
+
+        let enum_types =
+            fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/config/enums.txt"))?;
+        for name in enum_types.lines() {
+            builder = builder.rustified_non_exhaustive_enum(name);
+        }
+
+        let bindings = builder
             .generate()
             .map_err(|()| anyhow!("unable to run bindgen"))?;
 
