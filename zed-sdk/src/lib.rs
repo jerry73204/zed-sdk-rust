@@ -4,6 +4,7 @@ pub mod consts;
 pub mod error;
 mod input;
 mod recording;
+mod streaming_parameters;
 mod utils;
 
 use crate::common::*;
@@ -12,6 +13,7 @@ pub use consts::*;
 pub use error::*;
 pub use input::*;
 pub use recording::*;
+pub use streaming_parameters::*;
 
 pub type ErrorCode = sys::SL_ERROR_CODE;
 pub type DeviceProperties = sys::SL_DeviceProperties;
@@ -30,6 +32,7 @@ pub type FlipMode = sys::SL_FLIP_MODE;
 pub type Vector4 = sys::SL_Vector4;
 pub type Unit = sys::SL_UNIT;
 pub type CoordinateSystem = sys::SL_COORDINATE_SYSTEM;
+pub type StreamingCodec = sys::SL_STREAMING_CODEC;
 
 pub fn get_device_list() -> Vec<DeviceProperties> {
     unsafe {

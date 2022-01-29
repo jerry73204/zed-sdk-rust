@@ -1,4 +1,4 @@
-use super::recording_state as rs;
+use super::{input_source as is, recording_state as rs, streaming_state as ss};
 use crate::{
     common::*, error::code_to_result, utils::osstr_to_cstr, Camera, CoordinateSystem, DepthMode,
     FlipMode, InitParameters, InputType, Resolution, Result, Unit,
@@ -126,7 +126,7 @@ impl<'a> CameraBuilder<'a> {
         }
     }
 
-    pub fn open_svo<P>(self, svo_path: P) -> Result<Camera<rs::Inactive>>
+    pub fn open_svo<P>(self, svo_path: P) -> Result<Camera<is::SVO, rs::Inactive, ss::Inactive>>
     where
         P: AsRef<Path>,
     {
@@ -170,7 +170,7 @@ impl<'a> CameraBuilder<'a> {
         todo!("allocate new camera id");
     }
 
-    pub fn open_stream<A>(self, addr: A) -> Result<Camera<rs::Inactive>>
+    pub fn open_stream<A>(self, addr: A) -> Result<Camera<is::Stream, rs::Inactive, ss::Inactive>>
     where
         A: Into<SocketAddr>,
     {
@@ -216,7 +216,7 @@ impl<'a> CameraBuilder<'a> {
         todo!("allocate new camera id");
     }
 
-    pub fn open_usb(self, id: u8) -> Result<Camera<rs::Inactive>> {
+    pub fn open_usb(self, id: c_int) -> Result<Camera<is::USB, rs::Inactive, ss::Inactive>> {
         let Self {
             output_file,
             opt_settings_path,

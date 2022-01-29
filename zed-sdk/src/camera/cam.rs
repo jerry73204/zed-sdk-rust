@@ -1,127 +1,19 @@
-use super::recording_state as rs;
+use super::{input_source as is, recording_state as rs, streaming_state as ss};
 use crate::{
     common::*, ensure, error::code_to_result, utils::osstr_to_cstr, CalibrationParameters, Mem,
-    Model, RecordingParams, Result, RuntimeParameters, VideoSettings, View,
+    Model, RecordingParams, Result, RuntimeParameters, StreamingParameters, VideoSettings, View,
 };
-use std::os::raw::{c_uint, c_ulonglong};
+use std::os::raw::{c_uint, c_ulonglong, c_ushort};
 
 #[derive(Debug)]
-pub struct Camera<T> {
+pub struct Camera<I, R, S> {
     inner: Inner,
-    _phantom: PhantomData<T>,
+    _phantom: PhantomData<(I, R, S)>,
 }
 
-impl Camera<rs::Inactive> {
-    pub fn enable_recording<P>(
-        mut self,
-        output_file: P,
-        params: RecordingParams,
-    ) -> Result<Camera<rs::Recording>>
-    where
-        P: AsRef<Path>,
-    {
-        let output_file = osstr_to_cstr(output_file.as_ref());
-        let id = self.id();
-
-        let code = unsafe {
-            sys::sl_enable_recording(
-                id as c_int,
-                output_file.as_ptr(),
-                params.compression_mode,
-                params.bitrate as c_uint,
-                params.target_framerate as c_int,
-                params.transcode_streaming_input,
-            )
-        };
-        code_to_result(code as u32)?;
-
-        Ok(Camera {
-            inner: Inner {
-                recording_state: RecordingState::Recording,
-                ..self.inner
-            },
-            _phantom: PhantomData,
-        })
-    }
-
-    pub fn close(mut self) {
-        unsafe {
-            let id = self.id();
-            sys::sl_close_camera(id);
-            self.inner.recording_state = RecordingState::Closed;
-        }
-    }
-
-    pub(crate) fn new(id: u8) -> Self {
-        Self {
-            inner: Inner {
-                id,
-                recording_state: RecordingState::Inactive,
-            },
-            _phantom: PhantomData,
-        }
-    }
-}
-
-impl Camera<rs::Recording> {
-    pub fn disable_recording(mut self) -> Camera<rs::Inactive> {
-        let id = self.id();
-        unsafe {
-            sys::sl_disable_recording(id as c_int);
-        }
-
-        Camera {
-            inner: Inner {
-                recording_state: RecordingState::Inactive,
-                ..self.inner
-            },
-            _phantom: PhantomData,
-        }
-    }
-
-    pub fn pause_recording(mut self) -> Camera<rs::Paused> {
-        let id = self.id();
-        unsafe {
-            sys::sl_pause_recording(id as c_int, true);
-        }
-
-        Camera {
-            inner: Inner {
-                recording_state: RecordingState::Paused,
-                ..self.inner
-            },
-            _phantom: PhantomData,
-        }
-    }
-
-    pub fn grab(&mut self, mut runtime: RuntimeParameters) -> Result<GrabHandle<'_>> {
-        let id = self.id();
-        let code = unsafe { sys::sl_grab(id as c_int, &mut runtime as *mut _) };
-        code_to_result(code as u32)?;
-        Ok(GrabHandle { camera: self })
-    }
-}
-
-impl Camera<rs::Paused> {
-    pub fn resume_recording(mut self) -> Camera<rs::Recording> {
-        let id = self.id();
-        unsafe {
-            sys::sl_pause_recording(id as c_int, false);
-        }
-
-        Camera {
-            inner: Inner {
-                recording_state: RecordingState::Recording,
-                ..self.inner
-            },
-            _phantom: PhantomData,
-        }
-    }
-}
-
-impl<T> Camera<T> {
+impl<I, R, S> Camera<I, R, S> {
     pub fn id(&mut self) -> c_int {
-        self.inner.id as c_int
+        self.inner.id
     }
 
     pub fn height(&mut self) -> c_int {
@@ -168,15 +60,203 @@ impl<T> Camera<T> {
     }
 }
 
+impl<I> Camera<I, rs::Inactive, ss::Inactive> {
+    pub(crate) fn new(id: c_int) -> Self {
+        Self {
+            inner: Inner {
+                id,
+                recording_state: RecordingState::Inactive,
+                streaming_state: StreamingState::Inactive,
+            },
+            _phantom: PhantomData,
+        }
+    }
+
+    pub fn close(mut self) {
+        unsafe {
+            let id = self.id();
+            sys::sl_close_camera(id);
+            self.inner.recording_state = RecordingState::Closed;
+            self.inner.streaming_state = StreamingState::Closed;
+        }
+    }
+}
+
+impl<I, S> Camera<I, rs::Inactive, S> {
+    pub fn enable_recording<P>(
+        mut self,
+        output_file: P,
+        params: RecordingParams,
+    ) -> Result<Camera<I, rs::Recording, S>>
+    where
+        P: AsRef<Path>,
+    {
+        let output_file = osstr_to_cstr(output_file.as_ref());
+        let id = self.id();
+
+        let code = unsafe {
+            sys::sl_enable_recording(
+                id,
+                output_file.as_ptr(),
+                params.compression_mode,
+                params.bitrate as c_uint,
+                params.target_framerate as c_int,
+                params.transcode_streaming_input,
+            )
+        };
+        code_to_result(code as u32)?;
+
+        Ok(Camera {
+            inner: Inner {
+                recording_state: RecordingState::Recording,
+                ..self.inner
+            },
+            _phantom: PhantomData,
+        })
+    }
+}
+
+impl<I, S> Camera<I, rs::Recording, S> {
+    pub fn disable_recording(mut self) -> Camera<I, rs::Inactive, S> {
+        let id = self.id();
+        unsafe {
+            sys::sl_disable_recording(id);
+        }
+
+        Camera {
+            inner: Inner {
+                recording_state: RecordingState::Inactive,
+                ..self.inner
+            },
+            _phantom: PhantomData,
+        }
+    }
+
+    pub fn pause_recording(mut self) -> Camera<I, rs::Paused, S> {
+        let id = self.id();
+        unsafe {
+            sys::sl_pause_recording(id, true);
+        }
+
+        Camera {
+            inner: Inner {
+                recording_state: RecordingState::Paused,
+                ..self.inner
+            },
+            _phantom: PhantomData,
+        }
+    }
+
+    pub fn grab(&mut self, mut runtime: RuntimeParameters) -> Result<GrabHandle<'_, I, S>> {
+        let id = self.id();
+        let code = unsafe { sys::sl_grab(id, &mut runtime as *mut _) };
+        code_to_result(code as u32)?;
+        Ok(GrabHandle { camera: self })
+    }
+}
+
+impl<I, S> Camera<I, rs::Paused, S> {
+    pub fn resume_recording(mut self) -> Camera<I, rs::Recording, S> {
+        let id = self.id();
+        unsafe {
+            sys::sl_pause_recording(id, false);
+        }
+
+        Camera {
+            inner: Inner {
+                recording_state: RecordingState::Recording,
+                ..self.inner
+            },
+            _phantom: PhantomData,
+        }
+    }
+}
+
+impl<I, R> Camera<I, R, ss::Inactive> {
+    pub fn enable_streaming(
+        mut self,
+        params: StreamingParameters,
+    ) -> Result<Camera<I, R, ss::Streaming>> {
+        let id = self.id();
+        let StreamingParameters {
+            codec,
+            bitrate,
+            port,
+            gop_size,
+            adaptative_bitrate,
+            chunk_size,
+            target_framerate,
+        } = params;
+
+        let code = unsafe {
+            sys::sl_enable_streaming(
+                id,
+                codec,
+                bitrate as c_uint,
+                port as c_ushort,
+                gop_size.map(|size| size as c_int).unwrap_or(-1),
+                adaptative_bitrate as c_int,
+                chunk_size as c_int,
+                target_framerate.map(|fps| fps as c_int).unwrap_or(0),
+            )
+        };
+        code_to_result(code as u32)?;
+
+        Ok(Camera {
+            inner: Inner {
+                streaming_state: StreamingState::Streaming,
+                ..self.inner
+            },
+            _phantom: PhantomData,
+        })
+    }
+}
+
+impl<I, R> Camera<I, R, ss::Streaming> {
+    pub fn disable_streaming(mut self) -> Camera<I, R, ss::Inactive> {
+        let id = self.id();
+        unsafe {
+            sys::sl_disable_streaming(id);
+        }
+
+        Camera {
+            inner: Inner {
+                streaming_state: StreamingState::Inactive,
+                ..self.inner
+            },
+            _phantom: PhantomData,
+        }
+    }
+}
+
+impl<R, S> Camera<is::SVO, R, S> {
+    pub fn svo_position(&mut self) -> usize {
+        let id = self.id();
+        unsafe { sys::sl_get_svo_position(id) as usize }
+    }
+
+    pub fn set_svo_position(&mut self, pos: usize) {
+        let id = self.id();
+        unsafe {
+            sys::sl_set_svo_position(id, pos as c_int);
+        }
+    }
+
+    pub fn num_frames(&mut self) -> usize {
+        let id = self.id();
+        unsafe { sys::sl_get_svo_number_of_frames(id) as usize }
+    }
+}
+
 pub use grab::*;
 mod grab {
     use super::*;
 
-    pub struct GrabHandle<'a> {
-        pub(super) camera: &'a mut Camera<rs::Recording>,
+    pub struct GrabHandle<'a, I, S> {
+        pub(super) camera: &'a mut Camera<I, rs::Recording, S>,
     }
 
-    impl<'a> GrabHandle<'a> {
+    impl<'a, I, S> GrabHandle<'a, I, S> {
         pub fn retrieve_image<B>(
             &mut self,
             type_: View,
@@ -201,7 +281,7 @@ mod grab {
 
             let code = unsafe {
                 sys::sl_retrieve_image(
-                    id as c_int,
+                    id,
                     buffer.as_mut_ptr(),
                     type_,
                     mem,
@@ -226,12 +306,12 @@ mod grab {
 
         pub fn image_timestamp(&mut self) -> c_ulonglong {
             let id = self.camera.id();
-            unsafe { sys::sl_get_image_timestamp(id as c_int) }
+            unsafe { sys::sl_get_image_timestamp(id) }
         }
 
         pub fn current_timestamp(&mut self) -> c_ulonglong {
             let id = self.camera.id();
-            unsafe { sys::sl_get_current_timestamp(id as c_int) }
+            unsafe { sys::sl_get_current_timestamp(id) }
         }
 
         pub fn save_current_image<P>(&mut self, view: View, output_file: P) -> Result<()>
@@ -241,8 +321,7 @@ mod grab {
             let id = self.camera.id();
             let output_file = osstr_to_cstr(output_file.as_ref());
 
-            let code =
-                unsafe { sys::sl_save_current_image(id as c_int, view, output_file.as_ptr()) };
+            let code = unsafe { sys::sl_save_current_image(id, view, output_file.as_ptr()) };
             code_to_result(code as u32)
         }
     }
@@ -254,8 +333,9 @@ mod inner {
 
     #[derive(Debug)]
     pub struct Inner {
-        pub id: u8,
+        pub id: c_int,
         pub recording_state: RecordingState,
+        pub streaming_state: StreamingState,
     }
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -266,9 +346,16 @@ mod inner {
         Closed,
     }
 
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum StreamingState {
+        Inactive,
+        Streaming,
+        Closed,
+    }
+
     impl Drop for Inner {
         fn drop(&mut self) {
-            let id = self.id as c_int;
+            let id = self.id;
 
             match self.recording_state {
                 RecordingState::Inactive => {}
@@ -281,6 +368,15 @@ mod inner {
                     sys::sl_close_camera(id);
                 },
                 RecordingState::Closed => {}
+            }
+
+            match self.streaming_state {
+                StreamingState::Inactive => {}
+                StreamingState::Streaming => unsafe {
+                    sys::sl_disable_streaming(id);
+                    sys::sl_close_camera(id);
+                },
+                StreamingState::Closed => {}
             }
         }
     }

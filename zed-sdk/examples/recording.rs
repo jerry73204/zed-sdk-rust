@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{bail, Result};
 use chrono::{Local, SecondsFormat};
 use dialoguer as dial;
 use sdk::CameraBuilder;
@@ -11,6 +11,10 @@ use zed_sdk as sdk;
 fn main() -> Result<()> {
     // Get the list of cameras
     let devices = sdk::get_device_list();
+
+    if devices.is_empty() {
+        bail!("no camera available");
+    }
 
     // Let user chooses a camera
     let choice = {
@@ -39,7 +43,7 @@ fn main() -> Result<()> {
         .interact()?;
 
     // Open camera and start recording
-    let camera = CameraBuilder::new().open_usb(camera_id as u8)?;
+    let camera = CameraBuilder::new().open_usb(camera_id)?;
     let mut camera = camera.enable_recording(output_file, Default::default())?;
     eprintln!("Start recording...");
     eprintln!("Press Ctrl-C to stop");
