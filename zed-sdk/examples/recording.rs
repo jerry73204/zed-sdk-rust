@@ -1,7 +1,7 @@
 use anyhow::{bail, Result};
 use chrono::{Local, SecondsFormat};
 use dialoguer as dial;
-use sdk::CameraBuilder;
+use sdk::{CameraBuilder, Mem, View};
 use std::sync::{
     atomic::{AtomicBool, Ordering::*},
     Arc,
@@ -58,7 +58,9 @@ fn main() -> Result<()> {
     }
 
     while !terminate.load(SeqCst) {
-        let _grab = camera.grab(Default::default())?;
+        let mut grab = camera.grab(Default::default())?;
+        let values =
+            grab.retrieve_image_to_vec(View::SL_VIEW_LEFT_GRAY, Mem::SL_MEM_CPU, (100, 200))?;
         // let output_file = format!("{}.jpg", make_timestamp());
         // grab.save_current_image(View::SL_VIEW_LEFT, output_file)?;
     }

@@ -16,12 +16,16 @@ impl<I, R, S> Camera<I, R, S> {
         self.inner.id
     }
 
-    pub fn height(&mut self) -> c_int {
-        unsafe { sys::sl_get_height(self.id()) }
+    pub fn resolution(&mut self) -> (usize, usize) {
+        (self.width(), self.height())
     }
 
-    pub fn width(&mut self) -> c_int {
-        unsafe { sys::sl_get_width(self.id()) }
+    pub fn height(&mut self) -> usize {
+        unsafe { sys::sl_get_height(self.id()) as usize }
+    }
+
+    pub fn width(&mut self) -> usize {
+        unsafe { sys::sl_get_width(self.id()) as usize }
     }
 
     pub fn fps(&mut self) -> f32 {
@@ -292,15 +296,19 @@ mod grab {
             code_to_result(code as u32)
         }
 
-        pub fn retrieve_image_to_vec(
+        pub fn retrieve_image_to_vec<R>(
             &mut self,
             type_: View,
             mem: Mem,
-            wh: (usize, usize),
-        ) -> Result<Vec<c_int>> {
+            wh: R,
+        ) -> Result<Vec<c_int>>
+        where
+            R: Into<Option<(usize, usize)>>,
+        {
+            let wh = wh.into().unwrap_or_else(|| self.camera.resolution());
             let (width, height) = wh;
             let mut buffer: Vec<c_int> = vec![0; width * height];
-            self.retrieve_image(type_, mem, wh, &mut buffer)?;
+            self.retrieve_image(type_, mem, (width, height), &mut buffer)?;
             Ok(buffer)
         }
 
